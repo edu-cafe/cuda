@@ -1,0 +1,20 @@
+__global__ void cuda_dgemm(int n, const double *A, const double *B, double *C) {
+  int i = 0;
+  int j = 0;
+  int k = threadIdx.x;
+  //double prod = 0;
+  //prod = A[k * n + i] * B[j * n + k];
+  //C[j * n + i] = alpha * prod + beta * C[j * n + i];
+/*
+  for(j=0; j<n; j++) {
+    C[i * j + i] = alpha * (A[i * j + i] * B[i * j + i]) + beta * C[i * j + i];
+  }
+*/
+  for (i = 0; i < n; ++i) {
+    for (j = 0; j < n; ++j){
+      double prod = 0;
+	prod = A[k * n + i] * B[j * n + k];
+      C[j * n + i] = alpha * prod + beta * C[j * n + i];
+    }
+  }
+}
